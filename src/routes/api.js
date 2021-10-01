@@ -21,14 +21,14 @@ const postSchema = new mongoose.Schema({
   type: { type: String },
   city: { type: String, required: true },
   startingTime: { type: Date, required: true },
-  remeaningPlayers: { type: Number, required: true },
+  remainingPlayers: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
   },
-  discription: { type: String },
+  description: { type: String },
 });
 
 const Post = mongoose.model("Post", postSchema);
@@ -70,15 +70,15 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/createEvent", async (req, res) => {
-  const { id, type, city, startingTime, remeaningPlayers, discription } =
+  const { id, type, city, startingTime, remainingPlayers, description } =
     req.body;
   await Post.create({
     id,
     type,
     city,
     startingTime,
-    remeaningPlayers,
-    discription,
+    remainingPlayers,
+    description,
   });
 });
 
