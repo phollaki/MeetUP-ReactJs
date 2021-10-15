@@ -5,6 +5,8 @@ import AppHeader from "./AppHeader";
 import { NativeRouter, Route, Link } from "react-router-native";
 import Homepage from "./Homepage";
 import Register from "./Register";
+import Login from "./Login";
+
 export default function App() {
   return (
     <NativeRouter>
@@ -13,6 +15,7 @@ export default function App() {
       </View>
       <Route exact path="/" component={Homepage} />
       <Route path="/register" component={Register} />
+      <Route path="/login" component={Login} />
     </NativeRouter>
   );
 }

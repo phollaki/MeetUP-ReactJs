@@ -1,6 +1,7 @@
 import { Header, Button } from "react-native-elements";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
+import axios from 'axios'
 
 import {
   StyleSheet,
@@ -12,25 +13,14 @@ import {
 const Register = function () {
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
-  const [address, setAddress] = useState();
+  const [city, setCity] = useState();
   const [eventType, setEventType] = useState();
 
-  const emailHandler = (e) => {
-    setEmail(e);
-  };
-  const passwordHandler = (e) => {
-    setPassword(e);
-  };
-  const addressHandler = (e) => {
-    setAddress(e);
-  };
-  const eventTypeHandler = (e) => {
-    setEventType(e);
-  };
   signUp = async () => {
     try {
-      // here place your signup logic
-      console.log("user successfully signed up!: ", success);
+      const {data} = await axios.post ('/api/registration', {email, password, city, eventType}) 
+      console.log(data)
+      //console.log("user successfully signed up!: ", success);
     } catch (err) {
       console.log("error signing up: ", err);
     }
@@ -42,7 +32,8 @@ const Register = function () {
         placeholder="Email"
         autoCapitalize="none"
         placeholderTextColor="white"
-        onChangeText={emailHandler}
+        value={email}
+        onChangeText={email => setEmail(email)}
       />
       <TextInput
         style={styles.input}
@@ -50,19 +41,21 @@ const Register = function () {
         secureTextEntry={true}
         autoCapitalize="none"
         placeholderTextColor="white"
-        onChangeText={passwordHandler}
+        value={password}
+        onChangeText={password => setPassword(password)}
       />
       <TextInput
         style={styles.input}
         placeholder="Address"
         autoCapitalize="none"
         placeholderTextColor="white"
-        onChangeText={addressHandler}
+        value={city}
+        onChangeText={city => setCity(city)}
       />
       <Picker
         selectedValue={eventType}
         style={styles.input}
-        onValueChange={eventTypeHandler}
+        onValueChange={(itemValue) => setEventType(itemValue)}
       >
         <Picker.Item label="Football" value="football" />
         <Picker.Item label="Tennis" value="tennis" />
