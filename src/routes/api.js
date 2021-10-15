@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const router = Router();
 
+const TOKEN_SECRET = 'Token secret szoveg'
+
 router.get("/heartbeat", async (req, res) => {
   res.json({ connection: "true" });
 });
@@ -17,7 +19,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const postSchema = new mongoose.Schema({
-  id: { type: Number, required: true, unique: true },
   type: { type: String },
   city: { type: String, required: true },
   startingTime: { type: Date, required: true },
@@ -29,10 +30,46 @@ const postSchema = new mongoose.Schema({
     required: true,
   },
   description: { type: String },
+  request: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'onhold',
+  }
 });
+
+const onholdSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true,
+  },
+  event: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "post",
+    required: true,
+  },
+})
 
 const Post = mongoose.model("Post", postSchema);
 const User = mongoose.model("User", userSchema);
+const Onhold = mongoose.model("User", onholdSchema);
+
+const authentication = async (req, res, next) => {
+  const token = req.headers?.authorization?.replace('Bearer ', '')
+  console.log(token)
+  try {
+    const { userId } = await jwt.verify(token, TOKEN_SECRET)
+    req.user = userId
+    next()
+  } catch (error) {
+    res.json("Log in first")
+  }
+}
+
+router.get('/Usercheck', authentication,  async (req, res) => {
+  const user = await User.findOne({_id : req.user})
+  console.log(user)
+  res.json("OK")
+})
 
 router.post("/registration", async (req, res) => {
   const { email, password, city, eventType } = req.body;
@@ -54,6 +91,7 @@ router.post("/registration", async (req, res) => {
     res.json("Registration completed successfully");
   }
 });
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email }).select("+password");
@@ -64,27 +102,38 @@ router.post("/login", async (req, res) => {
     if (!match) {
       res.json("Wrong password");
     } else {
-      res.json("beléptél");
+      const token = await jwt.sign({ userId: user.id }, TOKEN_SECRET, {
+      })
+      res.json({ token })
     }
   }
 });
 
-router.post("/createEvent", async (req, res) => {
-  const { id, type, city, startingTime, remainingPlayers, description } =
+router.post("/createEvent", authentication, async (req, res) => {
+  const { type, city, startingTime, remainingPlayers, description } =
     req.body;
   await Post.create({
-    id,
     type,
     city,
     startingTime,
     remainingPlayers,
+    createdBy: req.user,
     description,
   });
+  res.json("Succes")
 });
 
 router.get("/Events", async (req, res) => {
   const posts = await Post.find().sort({ _id: -1 });
   res.json(posts);
 });
+
+router.post('/Onhold', authentication , async (req, res) => {
+  const id  = req.body
+  const join = await Onhold.create({ user: req.user, event: id })
+  const joinid = join._id
+  await Post.findByIdAndUpdate(id, {$push:{request:joinid}})
+  res.json("Join request send")
+})
 
 export default router;
