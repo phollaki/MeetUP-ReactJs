@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
 const postSchema = new mongoose.Schema({
   type: { type: String },
   city: { type: String, required: true },
-  startingTime: { type: Date, required: true },
+  startingTime: { type: Date, required: true , default: Date.now},
   remainingPlayers: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
   createdBy: {
@@ -51,7 +51,7 @@ const onholdSchema = new mongoose.Schema({
 
 const Post = mongoose.model("Post", postSchema);
 const User = mongoose.model("User", userSchema);
-const Onhold = mongoose.model("User", onholdSchema);
+const Onhold = mongoose.model("OnHold", onholdSchema);
 
 const authentication = async (req, res, next) => {
   const token = req.headers?.authorization?.replace('Bearer ', '')
@@ -109,13 +109,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
 router.post("/createEvent", authentication, async (req, res) => {
-  const { type, city, startingTime, remainingPlayers, description } =
+  const { type, city, remainingPlayers, description } =
     req.body;
   await Post.create({
     type,
     city,
-    startingTime,
     remainingPlayers,
     createdBy: req.user,
     description,
