@@ -1,7 +1,7 @@
-import { Header, Button } from "react-native-elements";
+import { Header, Button, View, StyleSheet, Text, TextInput } from "react-native-elements";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import axios from 'axios'
+import axios from 'axios';
 
 const Login = () =>{
 
@@ -9,7 +9,7 @@ const Login = () =>{
     const [email, setEmail] = useState();
     const login = async () => {
         const { data } = await axios.post('http://192.168.0.104:3001/api/login', {
-          username,
+          email,
           password,
         })
 
@@ -20,7 +20,7 @@ const Login = () =>{
           } else {
             console.log("Nem sikerült bejelentkezni")
           }
-        }
+        };
 
     return (
         <View> 
@@ -29,8 +29,8 @@ const Login = () =>{
             <Text>Password:</Text>
             <TextInput secureTextEntry={true} value={password} onChangeText={password => setPassword(password)} />
             <Button onPress={login} title="Login" />
-            </View>
-    )
-}
+        </View>
+    );
+};
 
-export default Login
+export default Login;
