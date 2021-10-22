@@ -15,10 +15,11 @@ const Register = function () {
   const [email, setEmail] = useState();
   const [city, setCity] = useState();
   const [eventType, setEventType] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
 
   signUp = async () => {
     try {
-      const {data} = await axios.post ('/api/registration', {email, password, city, eventType}) 
+      const {data} = await axios.post ('/api/registration', {email, password, city, eventType, phoneNumber}) 
       console.log(data)
       //console.log("user successfully signed up!: ", success);
     } catch (err) {
@@ -51,6 +52,14 @@ const Register = function () {
         placeholderTextColor="white"
         value={city}
         onChangeText={city => setCity(city)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Phone Number"
+        autoCapitalize="none"
+        placeholderTextColor="white"
+        value={phoneNumber}
+        onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
       />
       <Picker
         selectedValue={eventType}
