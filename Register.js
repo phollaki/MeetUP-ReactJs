@@ -1,15 +1,8 @@
-import { Header, Button } from "react-native-elements";
-import React, { useState } from "react";
-import { Picker } from "@react-native-picker/picker";
+import { Header, Button } from "react-native-elements"
+import React, { useState } from "react"
+import { Picker } from "@react-native-picker/picker"
 import axios from 'axios'
-
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  TextInput,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
 const Register = function () {
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();

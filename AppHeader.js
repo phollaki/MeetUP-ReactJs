@@ -23,8 +23,8 @@ const AppHeader = () => {
         }
         rightComponent={
           <TouchableOpacity style={styles.button} onPress={this.onPress}>
-            <Link to="/register">
-              <Text style={styles.buttonText}>Register</Text>
+            <Link to="/create_event">
+              <Text style={styles.buttonText}>Create Event</Text>
             </Link>
           </TouchableOpacity>
         }

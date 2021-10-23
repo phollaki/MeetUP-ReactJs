@@ -6,6 +6,7 @@ import { NativeRouter, Route, Link } from "react-router-native";
 import Homepage from "./Homepage";
 import Register from "./Register";
 import Login from "./Login";
+import CreateEvent from "./createEvent";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Route exact path="/" component={Homepage} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
+      <Route path="/create_event" component={CreateEvent} />
     </NativeRouter>
   );
 }
