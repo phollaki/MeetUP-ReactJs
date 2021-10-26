@@ -6,7 +6,6 @@ const User = require("../models/User");
 // Protect routes
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
-
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -29,7 +28,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     req.user = await User.findById(decoded.id);
     next();
   } catch (err) {
-    return next(new ErrorResponse("Not authorized to access this route", 401));
+    return next(new ErrorResponse("Cannot find user with id", 401));
   }
 });
 
