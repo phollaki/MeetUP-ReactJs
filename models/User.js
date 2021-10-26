@@ -14,13 +14,13 @@ const UserSchema = new mongoose.Schema({
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Please add a valid email",
     ],
-    select: false,
     unique: true,
   },
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
+    select: false,
   },
   password: {
     type: String,
@@ -49,7 +49,6 @@ const UserSchema = new mongoose.Schema({
   registeredAt: {
     type: Date,
     default: Date.now,
-    select: false,
   },
 });
 
