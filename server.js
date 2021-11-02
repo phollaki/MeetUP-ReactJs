@@ -21,6 +21,8 @@ connectDB();
 
 // Route files
 const auth = require("./routes/auth");
+const event = require("./routes/event");
+const onhold = require("./routes/onhold");
 
 const app = express();
 app.use(cors());
@@ -33,7 +35,9 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use("/api/v1/auth", auth, cors({ origin: "*" }));
+app.use("/api/v1/auth", auth);
+app.use("/api/v1/event", event);
+app.use("/api/v1/onhold", onhold);
 app.use(errorHandler);
 
 PORT = process.env.PORT || 5000;
