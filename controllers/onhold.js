@@ -22,5 +22,17 @@ exports.Join = asyncHandler(async (req, res, next) => {
 });
 
 // accept join
+exports.Acceptjoin = asyncHandler(async (req,res,next) => {
+  const id= req.params.id
+  const removed = await Onhold.findByIdAndDelete(id)
+  const event = await Event.findByIdAndUpdate(removed.event, {$pull:{request : id}})
+  const added = await Event.findByIdAndUpdate(removed.event, {$push:{members : removed.user}})
+
+})
 
 // decline join
+exports.Declinejoin = asyncHandler(async (req,res,next) => {
+  const id= req.params.id
+  const removed = await Onhold.findByIdAndDelete(id)
+  const event = await Event.findByIdAndUpdate(removed.event, {$pull:{request : id}})
+})

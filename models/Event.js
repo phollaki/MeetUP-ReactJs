@@ -29,7 +29,11 @@ const EventSchema = new mongoose.Schema({
     request: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'onhold',
-    }
+    },
+    members:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+    },
 });
 
 module.exports = mongoose.model("Event", EventSchema);
