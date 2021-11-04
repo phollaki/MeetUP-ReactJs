@@ -6,7 +6,7 @@ const router = express.Router();
 const { protect } = require("../middleware/auth");
 
 router.post("/Join", protect, Join);
-router.put("/Acceptjoin", protect, Acceptjoin);
-router.put("/Declinejoin", protect, Declinejoin);
+router.put("/Acceptjoin/:id", protect, Acceptjoin);
+router.put("/Declinejoin/:id", protect, Declinejoin);
 
 module.exports = router;

@@ -23,26 +23,16 @@ exports.CreateEvent = asyncHandler(async (req, res, next) => {
 
 exports.Events = asyncHandler(async (req, res, next) => {
   const events = await Event.find().sort({ _id: -1 });
-
+  
   res.status(200).json({
     success: true,
     data: events,
   });
 });
 
-// filtered/recommended events protected
-exports.Recomended = asyncHandler(async(req,res,next) =>{
-  const user = await User.findById(req.user)
-  const events = await Events.find({type: user.eventType})
-  res.status(200).json({
-    success: true,
-    data: events,
-  });
-})
-
 // events:id
 exports.Event = asyncHandler(async (req, res, next) => {
-  const event = await Event.findById(req.params.id)
+  const event = await Event.findById(req.params.id);
 
   res.status(200).json({
     success: true,
@@ -51,42 +41,62 @@ exports.Event = asyncHandler(async (req, res, next) => {
 });
 
 // createdEvents
-exports.Createdevents = asyncHandler( async(req,res,next) =>{
-  const events = await Event.find({createdBy:req.user})
+exports.Createdevents = asyncHandler(async (req, res, next) => {
+  const events = await Event.find({ createdBy: req.user });
   res.status(200).json({
     success: true,
     data: events,
   });
-})
-
+});
 
 // joined events
-exports.Joinedevents = asyncHandler( async(req,res,next) =>{
-  const events = await Event.find({members:req.user})
+exports.Joinedevents = asyncHandler(async (req, res, next) => {
+  const events = await Event.find({ members: req.user });
   res.status(200).json({
     success: true,
     data: events,
   });
-})
-// delete event:id
-exports.Delete = asyncHandler( async(req,res,next) =>{
-  const delted = await Event.findByIdAndDelete(req.params.id)
+});
+// declined events
+exports.Declinedevents = asyncHandler(async (req, res, next) => {
+  const events = await Event.find({ declined: req.user });
   res.status(200).json({
     success: true,
-    data: delted,
+    data: events,
   });
-})
+});
+// delete event:id
+exports.Delete = asyncHandler(async (req, res, next) => {
+  const event = await Event.findById(req.params.id);
+  const userId = req.user._id.toString();
+  const created = event.createdBy.toString();
+  if (created === userId) {
+    await Event.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      success: true,
+      data: `Event is deleted`,
+    });
+  } else {
+    return next(
+      new ErrorResponse(
+        `Not authorized for this delete function, not your event`
+      )
+    );
+  }
+});
 
 // remove user from event:id
-exports.Removeuser = asyncHandler( async(req,res,next) =>{
-  const eventid = req.params.id
-  const userid= req.body.userid
-  const updated = await Event.findByIdAndUpdate(eventid,{$pull:{members : userid}})
+exports.Removeuser = asyncHandler(async (req, res, next) => {
+  const eventid = req.params.id;
+  const userid = req.body.userid;
+  const updated = await Event.findByIdAndUpdate(eventid, {
+    $pull: { members: userid },
+  });
   res.status(200).json({
     success: true,
     data: updated,
   });
 
-  // available or not - visible or not
+});
 
-})
+// available or not - visible or not

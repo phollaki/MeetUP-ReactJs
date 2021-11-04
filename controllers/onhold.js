@@ -22,17 +22,41 @@ exports.Join = asyncHandler(async (req, res, next) => {
 });
 
 // accept join
-exports.Acceptjoin = asyncHandler(async (req,res,next) => {
-  const id= req.params.id
-  const removed = await Onhold.findByIdAndDelete(id)
-  const event = await Event.findByIdAndUpdate(removed.event, {$pull:{request : id}})
-  const added = await Event.findByIdAndUpdate(removed.event, {$push:{members : removed.user}})
-
-})
+exports.Acceptjoin = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const onHold = await Onhold.findById(id);
+  if (!onHold) {
+    return next(new ErrorResponse(`Join is not find with id ${id}`));
+  }
+  const event = await Event.findByIdAndUpdate(onHold.event, {
+    $pull: { request: id },
+  });
+  const added = await Event.findByIdAndUpdate(onHold.event, {
+    $push: { members: onHold.user },
+  });
+  const removed = await Onhold.findByIdAndDelete(id);
+  res.status(200).json({
+    success: true,
+    data: `User accepted for event`,
+  });
+});
 
 // decline join
-exports.Declinejoin = asyncHandler(async (req,res,next) => {
-  const id= req.params.id
-  const removed = await Onhold.findByIdAndDelete(id)
-  const event = await Event.findByIdAndUpdate(removed.event, {$pull:{request : id}})
-})
+exports.Declinejoin = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const onHold = await Onhold.findById(id);
+  if (!onHold) {
+    return next(new ErrorResponse(`Join is not find with id ${id}`));
+  }
+  const event = await Event.findByIdAndUpdate(onHold.event, {
+    $pull: { request: id },
+  });
+  const added = await Event.findByIdAndUpdate(onHold.event, {
+    $push: { declined: onHold.user },
+  });
+  const removed = await Onhold.findByIdAndDelete(id);
+  res.status(200).json({
+    success: true,
+    data: `User declined for event`,
+  });
+});
