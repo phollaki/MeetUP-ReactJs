@@ -29,6 +29,14 @@ exports.Events = asyncHandler(async (req, res, next) => {
     data: events,
   });
 });
+exports.publicEvents = asyncHandler(async (req, res, next) => {
+  const events = await Event.find().sort({ _id: -1 });
+  
+  res.status(200).json({
+    success: true,
+    data: events,
+  });
+});
 
 // events:id
 exports.Event = asyncHandler(async (req, res, next) => {

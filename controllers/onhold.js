@@ -13,7 +13,7 @@ exports.Join = asyncHandler(async (req, res, next) => {
   });
 
   if (!event) {
-    return next(new ErrorResponse(`Event not find with id ${id}`));
+    return next(new ErrorResponse(`Event not found with id ${id}`, 404));
   }
   res.status(200).json({
     success: true,
@@ -25,12 +25,12 @@ exports.Join = asyncHandler(async (req, res, next) => {
 exports.Acceptjoin = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const onHold = await Onhold.findById(id);
-  const owner = req.user
+  const owner = req.user;
   if (!onHold) {
-    return next(new ErrorResponse(`Join is not find with id ${id}`));
+    return next(new ErrorResponse(`Join is not found with id ${id}`, 404));
   }
-  const event = await Event.findById(onHold.event)
-  if(event.createdBy === owner){
+  const event = await Event.findById(onHold.event);
+  if (event.createdBy === owner) {
     const event = await Event.findByIdAndUpdate(onHold.event, {
       $pull: { request: id },
     });
@@ -51,12 +51,12 @@ exports.Acceptjoin = asyncHandler(async (req, res, next) => {
 exports.Declinejoin = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const onHold = await Onhold.findById(id);
-  const owner = req.user
+  const owner = req.user;
   if (!onHold) {
-    return next(new ErrorResponse(`Join is not find with id ${id}`));
+    return next(new ErrorResponse(`Join is not found with id ${id}`, 404));
   }
-  const event = await Event.findById(onHold.event)
-  if(event.createdBy === owner){
+  const event = await Event.findById(onHold.event);
+  if (event.createdBy === owner) {
     const event = await Event.findByIdAndUpdate(onHold.event, {
       $pull: { request: id },
     });

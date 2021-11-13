@@ -49,13 +49,15 @@ exports.login = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return next(new ErrorResponse("Invalid credentials"), 401);
+    //return next(new ErrorResponse("Invalid credentials"), 401);
+    res.json("Invalid credentials");
   }
   // Check if password matches
   const isMatch = await user.matchPassword(password);
 
   if (!isMatch) {
-    return next(new ErrorResponse("Invalid credentials"), 401);
+    //return next(new ErrorResponse("Invalid credentials"), 401);
+    res.json("Invalid Credentials");
   }
 
   sendTokenResponse(user, 200, res);
@@ -113,5 +115,3 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     data: user,
   });
 });
-
-// change password
