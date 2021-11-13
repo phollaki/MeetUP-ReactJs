@@ -1,3 +1,76 @@
+.register {
+  height: 100vh;
+  position: relative;
+  background: url("../../images/register.jpg") center no-repeat;
+  background-size: cover;
+}
 .register__form {
-  border-radius: 15px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent);
+  color: white;
+  font-size: 15px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  width: 45%;
+  padding: 2rem;
+  margin-right: auto;
+  margin-left: auto;
+  animation: slideUp 1.5s;
+}
+.btn-join {
+  width: 10rem;
+  font-size: 1.5rem;
+}
+
+.register__btn {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 0.5px solid white;
+  width: 10rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  transition: all 0.3s ease-out;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+.register__btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  height: 100%;
+  z-index: -2;
+}
+.register__btn:hover::before {
+  animation: fill 0.5s cubic-bezier(1, 0, 0, 1) forwards;
+}
+
+.register__form {
+  background-color: rgba(0, 0, 0, 0.35);
+  color: white;
+  font-size: 15px;
+}
+.register__interests {
+  text-align: center;
+}
+.register__labelName {
+  font-size: 20px;
+  font-weight: 500;
+}
+@keyframes fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 110%;
+  }
+}
+@keyframes slideUp {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

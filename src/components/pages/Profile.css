@@ -1,0 +1,185 @@
+.profile {
+  min-height: 100vh;
+  position: relative;
+  background: url("../../images/profile.jpg") center no-repeat;
+  background-size: cover;
+}
+.profile__form {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.5),
+    transparent
+  );
+  color: white;
+  font-size: 15px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  width: 45%;
+  padding: 3rem;
+  margin-right: auto;
+  margin-left: auto;
+  animation: slideUp 1.5s;
+  display: flex;
+}
+.profile__form-left {
+  display: flex;
+  flex-direction: 0 0 40%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profile__avatar {
+  height: 7rem !important;
+  width: 7rem !important;
+  border: 2px solid black;
+}
+.profile__eventType {
+  font-size: 22px;
+}
+.profile__btn {
+  text-decoration: none;
+  text-align: center;
+  margin-top: 1rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 0.5px solid white;
+  width: 10rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 1.5rem;
+  transition: all 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+}
+.profile__btn:hover {
+  color: #fff;
+}
+.profile__btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: -2;
+  background: linear-gradient(to right bottom, #3aded4, #cd6a6d);
+  transform: scaleY(0);
+  transition: transform 0.4s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+    background-color 0.4s;
+}
+.profile__btn:hover::before {
+  transform: scaleY(1);
+  width: 100%;
+}
+.profile-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: green;
+  transform: scaleY(0);
+  transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s,
+    background-color 0.1s;
+}
+.profile-btn::before,
+.profile-btn:hover::before {
+  transform: scaleY(1);
+  width: 100%;
+}
+.profile-btn:active::before {
+  background-color: green;
+}
+.profile-btn:link,
+.profile-btn:visited {
+  text-decoration: none;
+  color: green;
+  text-transform: uppercase;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  position: relative;
+}
+.profile__form-right {
+  flex: 0 0 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-self: stretch;
+  flex-direction: column;
+}
+.profile__form-field {
+  display: flex;
+  align-items: center;
+}
+.profile__form-field:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.profile__form-label {
+  font-size: 22px;
+  justify-content: flex-start;
+  margin-right: auto;
+}
+.profile__form-input {
+  border: none;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem;
+}
+.profile__form-input::-webkit-input-placeholder {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+.profile__form-input::-moz-placeholder {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+.profile__form-input::-ms-placeholder {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+.profile__form-input::placeholder {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+.profile__form-events {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -2rem;
+}
+.profile__form-event {
+  list-style: none;
+  font-size: 15px;
+}
+.profile__form-event:not(:first-child) {
+  margin-left: 1rem;
+}
+.profile__form-register {
+  font-size: 22px;
+}
+.profile__form-date {
+  margin-left: 1rem;
+  font-size: 20px;
+}
+.btn-edit {
+  border: 1px solid white;
+  transition: all 0.4s;
+  width: 100%;
+  color: white;
+  font-size: 1.5rem;
+}

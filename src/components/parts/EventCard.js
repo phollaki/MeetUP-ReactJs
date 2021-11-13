@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./EventCard.css";
 function EventCard(props) {
-  const [user, setUser] = useState(true);
+  const [user] = useState(true);
 
   return (
     <div className="card mb-5">

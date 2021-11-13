@@ -1,0 +1,48 @@
+.loginBtns {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+.login__btn {
+  color: white;
+  border: 0.5px solid white;
+  width: 10rem;
+  font-size: 1.5rem;
+  transition: all 0.3s ease-out;
+}
+.login__btn:hover {
+  transform: scale(1.1);
+}
+.login {
+  height: 100vh;
+  position: relative;
+  background: url("../../images/login.jpg") center no-repeat;
+  background-size: cover;
+}
+.login__form {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent);
+  color: white;
+  font-size: 15px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  margin-top: 2rem;
+  width: 45%;
+  padding: 2rem;
+  margin-right: auto;
+  margin-left: auto;
+  animation: slideUp 1.5s;
+}
+
+.login__input {
+  width: 20rem;
+  margin: auto;
+  font-size: 20px;
+}
+@keyframes slideUp {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,13 @@
+.createdEvents {
+  min-height: 100vh;
+  background: url("../../images/created-events.jpg") no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.createdEvents__events {
+  padding: 1rem 10rem;
+  width: 100%;
+}

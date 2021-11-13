@@ -1,0 +1,148 @@
+.event {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  transition: all 0.2s;
+}
+.event:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.event__top {
+  display: flex;
+}
+.event__bottom {
+  margin-top: 2rem;
+}
+.event:not(:first-child) {
+  margin-top: 2rem;
+}
+.event__request-user {
+  display: flex;
+  align-items: center;
+}
+.event__image {
+  height: 15rem !important;
+  width: 25rem !important;
+  margin-right: 5rem;
+}
+.event__text {
+  flex: 1;
+}
+.event__text-title {
+  letter-spacing: 17px;
+  font-size: 35px;
+  font-weight: 500;
+}
+.event__location {
+  display: flex;
+}
+.event__location-city {
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.event__join {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+}
+.event__btn {
+  background: white;
+  position: relative;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: none;
+}
+.event__btn > * {
+  height: 100%;
+  width: 100%;
+  transition: all 0.2s ease-out;
+  display: inline-block;
+}
+.event__btn-delete {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.deleteIcon {
+  font-size: 40px !important;
+  cursor: pointer;
+  transition: all 0.2s !important;
+}
+.deleteIcon:hover {
+  cursor: pointer;
+  transform: scale(1.3);
+}
+.event__btn:hover {
+  background: white;
+}
+.event__btn--visible {
+  padding: 0.5rem 2rem;
+}
+.event__btn--invisible {
+  position: absolute;
+  left: 0;
+  top: -100%;
+  padding: 0.5rem;
+}
+.event__btn:hover .event__btn--visible {
+  transform: translateY(100%);
+}
+.event__btn:hover .event__btn--invisible {
+  top: 0;
+}
+.event__notFound {
+  display: flex;
+  align-items: center;
+}
+.moreInfo {
+  font-size: 18px;
+}
+.event__text-notFound {
+  font-size: 40px;
+  letter-spacing: 15px;
+}
+.event__btn-requests {
+  padding: 0rem 1rem;
+  background-color: rgb(255, 255, 255);
+  transition: all 0.2s;
+}
+.event__btn-requests:hover {
+  transform: scale(1.1);
+}
+.event__request-btn {
+  cursor: pointer;
+  font-size: 30px !important;
+  transition: all 0.2s !important;
+  margin-left: 1rem;
+}
+
+.event__request-btn:hover {
+  transform: scale(1.2);
+}
+.btn-accept {
+  color: green;
+}
+.btn-decline {
+  color: red;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

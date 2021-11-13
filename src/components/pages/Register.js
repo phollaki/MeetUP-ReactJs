@@ -1,232 +1,196 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./Register.css";
-import EventCard from "../parts/EventCard";
-const DATASET = [
-  {
-    id: 1,
-    time: "Friday 8:00 pm",
-    type: "football",
-    description:
-      "It is an event to play football at friday night with some young talented guy. If you are interested, click to Join!",
-    owner: "Johnathan David",
-    date: "2021.09.05",
-  },
-  {
-    id: 2,
-    time: "Tuesday 11:00 am",
-    type: "tennis",
-    description:
-      "Senior level tennis player wants to play with someone who is available at Tuesday in the morning hours.",
-    owner: "Dior Thomas",
-    date: "2021.09.05",
-  },
-  {
-    id: 3,
-    time: "Friday 8:00",
-    type: "football",
-    description:
-      "It is an event to play football at friday night with some young talented guy. If you are interested, click to Join!",
-    owner: "Johnathan David",
-    date: "2021.09.05",
-  },
-  {
-    id: 4,
-    time: "Friday 8:00",
-    type: "pingpong",
-    description:
-      "20 yo girl wants to play table tennis at Sopron, if you are interested, Join to me!",
-    owner: "Elizabeth",
-    date: "2021.09.05",
-  },
+import HttpService from "../service/http-service";
+import Header from "../layouts/Header";
+const EVENT_TYPES = [
+  "Football",
+  "Tennis",
+  "Running",
+  "Video games",
+  "Talking",
+  "Dance",
+  "Squash",
+  "Board Game",
+  "Table Tennis",
+  "Volleyball",
+  "Basketball",
+  "Costume Party",
+  "Paint",
+  "Drawing",
+  "Camping",
+  "Fishing",
+  "Cycling",
 ];
 function Register() {
-  const [registerData, setRegisterData] = useState([]);
+  const [eventType, setEventType] = useState([]);
+  const [name, setName] = useState("");
+  const [checked1, setChecked1] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [fromTime, setFromTime] = useState("07:00");
-  const [toTime, setToTime] = useState("22:00");
-  const [eventType, setEventType] = useState("football");
-  const [day, setDay] = useState("Monday");
-  const [city, setCity] = useState("");
-  const [data, setData] = useState([]);
-  const registerHandler = function (e) {
-    e.preventDefault();
-    console.log(
-      `Email: ${email} lives in ${city} at Address:${address} wants to play ${eventType} on ${day} from ${fromTime} to ${toTime}`
-    );
-    // ASYNC POST REQUEST TO BACKEND
-    // const data = Get back filtered events from backend
-    // setData(data)
-    setData(DATASET.filter((d) => d.type === eventType));
-    setEmail("");
-    setAddress("");
-    setCity("");
-    setDay("Monday");
-    setEventType("football");
-    setFromTime("07:00");
-    setToTime("22:00");
-    setPassword("");
-  };
-  console.log(data);
+  const [emailErr, setEmailErr] = useState(false);
+  const [pwdError, setPwdError] = useState(false);
+  const [cityError] = useState(false);
+  const [eventTypeError, setEventTypeError] = useState(false);
+  const [location, setLocation] = useState([null]);
 
-  const passwordHandler = function (e) {
-    setPassword(e.target.value);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      setLocation([position.coords.latitude, position.coords.longitude]);
+    });
+  }, []);
+
+  const error = pwdError || emailErr || cityError || eventTypeError;
+  const handleCheck1 = () => {
+    setChecked1(!checked1);
   };
+  const registerHandler = async function (e) {
+    e.preventDefault();
+    if (location[0] === null || location[1] === null) {
+      alert("Please allow to get your location if you want to register!");
+    } else {
+      const data = await HttpService.registration(
+        name,
+        email,
+        password,
+        eventType,
+        location[0],
+        location[1]
+      );
+      if (data.success === true) {
+        localStorage.setItem("token", JSON.stringify(data.token));
+        alert("Successfully registered!");
+      } else {
+        alert("Something went wrong with registration");
+      }
+      setEmail("");
+      setName("");
+      setEventType([]);
+      setPassword("");
+      setChecked1(false);
+    }
+  };
+
+  // Email change handler
   const emailHandler = function (e) {
     setEmail(e.target.value);
+    setEmailErr(false);
   };
-  const addressHandler = function (e) {
-    setAddress(e.target.value);
+
+  // Password change handler
+  const passwordHandler = function (e) {
+    setPassword(e.target.value);
+    setPwdError(false);
   };
-  const fromTimeHandler = function (e) {
-    setFromTime(e.target.value);
+
+  // Name change handler
+  const nameHandler = function (e) {
+    setName(e.target.value);
+    //setNameError(false);
   };
-  const toTimeHandler = function (e) {
-    setToTime(e.target.value);
-  };
-  const cityHandler = function (e) {
-    setCity(e.target.value);
-  };
-  const dayHandler = function (e) {
-    setDay(e.target.value);
-  };
+
+  // Event type handler
   const eventTypeHandler = function (e) {
-    setEventType(e.target.value);
+    if (!eventType.includes(e.target.value)) {
+      setEventType((prevState) => [...prevState, e.target.value]);
+    } else {
+      const index = eventType.indexOf(e.target.value);
+      if (index > -1) {
+        eventType.splice(index, 1);
+      }
+    }
+    setEventTypeError(false);
   };
-  if (data.length > 0) {
-    return (
-      <div className="container">
-        <h2 className="text-center mt-5">Events found!</h2>
-        {data.map((d) => (
-          <EventCard
-            key={d.id}
-            id={d.id}
-            type={d.type}
-            descr={d.description}
-            owner={d.owner}
-          />
-        ))}
-      </div>
-    );
-  }
+
+  // Render register form
   return (
-    <form
-      className="container mt-5 shadow-lg p-4 register__form"
-      onSubmit={registerHandler}
-    >
-      <div className="form-row">
-        <div className="form-group col-md-6">
-          <label htmlFor="inputEmail4">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            id="inputEmail4"
-            placeholder="Email"
-            value={email}
-            onChange={emailHandler}
-          />
+    <div className="register">
+      <Header />
+      <form className="register__form" onSubmit={registerHandler}>
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="name" className="register__labelName">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              required
+              placeholder="Your name"
+              value={name}
+              onChange={nameHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="inputEmail4" className="register__labelName">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="inputEmail4"
+              required
+              placeholder="example@gmail.com"
+              value={email}
+              onChange={emailHandler}
+            />
+          </div>
+          {emailErr && <p style={{ color: "red" }}>Your email is invalid</p>}
+          <div className="form-group ">
+            <label htmlFor="inputPassword4" className="register__labelName">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              minLength="6"
+              required
+              id="inputPassword4"
+              placeholder="asd123"
+              value={password}
+              onChange={passwordHandler}
+            />
+          </div>
+          {pwdError && (
+            <p style={{ color: "red" }}>
+              Your password is invalid (have to contains letters and numbers)
+            </p>
+          )}
         </div>
-        <div className="form-group col-md-6">
-          <label htmlFor="inputPassword4">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="inputPassword4"
-            placeholder="Password"
-            value={password}
-            onChange={passwordHandler}
-          />
+        <div className="register__labelName">Interests</div>
+        <div className="register__interests">
+          {EVENT_TYPES.map((event, i) => (
+            <div key={event} className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={`inlineCheckbox${event}`}
+                onClick={handleCheck1}
+                value={event.toLowerCase()}
+                onChange={eventTypeHandler}
+              />
+              <label
+                className="form-check-label"
+                htmlFor={`inlineCheckbox${event}`}
+              >
+                {event}
+              </label>
+            </div>
+          ))}
         </div>
-      </div>
-      <div className="form-group">
-        <label htmlFor="inputAddress">Address</label>
-        <input
-          type="text"
-          className="form-control"
-          id="inputAddress"
-          placeholder="1234 Main St"
-          value={address}
-          onChange={addressHandler}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="sport-types">Interested Event</label>
-        <select
-          className="form-control"
-          id="sport-types"
-          value={eventType}
-          onChange={eventTypeHandler}
-        >
-          <option value="football">Football</option>
-          <option value="tennis">Tennis</option>
-          <option value="pingpong">Table Tennis</option>
-          <option value="squash">Squash</option>
-          <option value="swimming">Swimming</option>
-          <option value="running">Running</option>
-        </select>
-      </div>
-      <div className="form-row">
-        <div className="form-group col-md-6">
-          <label htmlFor="inputCity">City</label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputCity"
-            value={city}
-            onChange={cityHandler}
-          />
+        {eventTypeError && (
+          <p style={{ color: "red" }}>
+            You have to select minimum 1 event for submit your registration
+          </p>
+        )}
+        <div className="d-flex justify-content-center mt-2 ">
+          <button disabled={error} type="submit" className="register__btn">
+            Register
+          </button>
         </div>
-      </div>
-      <div className="form-group">
-        <label htmlFor="exampleFormControlSelect1">Day of the week</label>
-        <select
-          className="form-control"
-          id="weekdays"
-          value={day}
-          onChange={dayHandler}
-        >
-          <option value="monday">Monday</option>
-          <option value="tuesday">Tuesday</option>
-          <option value="wednesday">Wednesday</option>
-          <option value="thursday">Thursday</option>
-          <option value="friday">Friday</option>
-          <option value="saturday">Saturday</option>
-          <option value="sunday">Sunday</option>
-        </select>
-      </div>
-      <div className="row">
-        <label>Available</label>
-        <div className="col">
-          <label htmlFor="time1">From</label>
-          <input
-            className="form-control"
-            id="time1"
-            type="time"
-            name="appt-time"
-            value={fromTime}
-            onChange={fromTimeHandler}
-          />
-        </div>
-        <div className="col">
-          <label htmlFor="time2">To</label>
-          <input
-            className="form-control"
-            id="time2"
-            type="time"
-            name="appt-time"
-            value={toTime}
-            onChange={toTimeHandler}
-          />
-        </div>
-      </div>
-      <div className="d-flex justify-content-center mt-2">
-        <button type="submit" className="btn btn-join">
-          Sign in
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 

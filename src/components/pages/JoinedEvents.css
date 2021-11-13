@@ -1,0 +1,13 @@
+.joinedEvents {
+  min-height: 100vh;
+  background: url("../../images/joined-events.jpg") no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.joinedEvents__event {
+  padding: 1rem 10rem;
+  width: 100%;
+}

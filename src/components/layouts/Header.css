@@ -1,34 +1,43 @@
 .header {
+  display: flex;
+  justify-content: space-between;
   padding: 2rem;
-  color: white;
-  background: rgba(1, 80, 31, 0.8);
 }
 .header__up {
-  background-color: white;
   border-radius: 55px;
   padding: 4px;
   color: green;
+  background-color: white;
+}
+.header__link {
+  text-decoration: none;
+  color: white;
+}
+.header__link:hover {
+  color: white;
 }
 .header h1 {
-  font-size: 30px;
+  font-size: 40px;
 }
-.btn-recommendation {
+.btn-header {
   color: white;
-  border: none;
-  font-size: 20px;
-}
-.btn-register {
-  color: white;
-  border: none;
-  font-size: 20px;
+  font-size: 20px !important;
+  margin-right: 20px;
+  transition: all 0.4s ease-out;
 }
 .btn:hover {
-  color: rgb(255, 255, 255);
+  color: white;
   transform: scale(1.2);
-  border: 1px solid white;
 }
+
 .btn:focus,
 .btn:active {
   outline: none !important;
   box-shadow: none;
+}
+.header__link-text {
+  font-size: 15px;
+}
+.header__icon {
+  font-size: 30px !important;
 }
