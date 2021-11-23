@@ -49,7 +49,6 @@ const createEvent = () =>{
             <Picker
                 style={styles.input}
                 selectedValue={eventType}
-                style={styles.input}
                 onValueChange={(itemValue) => setEventType(itemValue)}
             >
                 <Picker.Item label="Football" value="football" />
@@ -76,6 +75,10 @@ const styles = StyleSheet.create({
       borderRadius: 14,
       fontSize: 18,
       fontWeight: "500",
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      borderBottomLeftRadius: 10, 
+      borderBottomRightRadius: 10
     },
     container: {
       flex: 1,
@@ -89,5 +92,5 @@ const styles = StyleSheet.create({
       padding: 10,
     },
   });
-export default createEvent;
+export default createEvent; 
 

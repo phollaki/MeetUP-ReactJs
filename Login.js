@@ -23,14 +23,41 @@ const Login = () =>{
         };
 
     return (
-        <View> 
+        <View style={styles.container}> 
             <Text>Email:</Text>
-            <TextInput value={email} onChangeText={email => setEmail(email)} />
+            <TextInput value={email} onChangeText={email => setEmail(email)} style={styles.input} />
             <Text>Password:</Text>
-            <TextInput secureTextEntry={true} value={password} onChangeText={password => setPassword(password)} />
-            <Button onPress={login} title="Login" />
+            <TextInput secureTextEntry={true} value={password} onChangeText={password => setPassword(password)} style={styles.input} />
+            <TouchableOpacity onPress={Login}>
+                <Text style={styles.button}>Login</Text>
+            </TouchableOpacity>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    width: 350,
+    height: 55,
+    backgroundColor: "green",
+    margin: 10,
+    padding: 8,
+    color: "white",
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: "500",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "green",
+    borderRadius: 10,
+    padding: 10,
+  },
+});
 
 export default Login;

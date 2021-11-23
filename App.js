@@ -7,18 +7,22 @@ import Homepage from "./Homepage";
 import Register from "./Register";
 import Login from "./Login";
 import CreateEvent from "./createEvent";
+import 'react-native-gesture-handler'
+import { NavigationContainer} from '@react-navigation/native'
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+const Drawer = createDrawerNavigator()
 
 export default function App() {
   return (
-    <NativeRouter>
-      <View>
-        <AppHeader />
-      </View>
-      <Route exact path="/" component={Homepage} />
-      <Route path="/register" component={Register} />
-      <Route path="/login" component={Login} />
-      <Route path="/create_event" component={CreateEvent} />
-    </NativeRouter>
+    <NavigationContainer>
+      <Drawer.Navigator>
+        <Drawer.Screen name="Homepage" component={Homepage}/>
+        <Drawer.Screen name="Create Event" component={CreateEvent}/>
+        <Drawer.Screen name="Register" component={Register}/>
+        <Drawer.Screen name="Login" component={Login}/>
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
 
