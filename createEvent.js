@@ -1,35 +1,75 @@
-import React, { useState } from "react";
-import axios from 'axios'
-import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
+import React, { useState} from "react"
+import httpService from "./components/http-service.js"
+import {StyleSheet, Text, TouchableOpacity, View, TextInput, Button, Platform} from "react-native"
 import { Picker } from "@react-native-picker/picker"
+import NumericInput from 'react-native-numeric-input'
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 const createEvent = () =>{
-    const [name, setName] = useState();
     const [city, setCity] = useState();
     const [description, setDescription] = useState();
-    const [eventType, setEventType] = useState();
-    //több nem jutott eszembe
+    const [typeOfEvent, setTypeOfEvent] = useState();
+    const [numOfPeople, setNumOfPeople] = useState(null);
 
-    create = async () => {
-        try {
-          const {data} = await axios.post ('/api/create-event', {name, description, city, eventType}) 
-          console.log(data)
-          //console.log("user successfully signed up!: ", success);
-        } catch (err) {
-          console.log("error signing up: ", err);
-        }
-      };
+    const eventCreateHandler = async (e) => {
+      e.preventDefault();
+      const res = await httpService.createEvent(
+        typeOfEvent,
+        city,
+        numOfPeople,
+        description,
+        date
+      );
+    };
+
+    //datetime picker
+    const [date, setDate] = useState(new Date(1598051730000));
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+  
+    const onChange = (event, selectedDate) => {
+      const currentDate = selectedDate || date;
+      setShow(Platform.OS === 'ios');
+      setDate(currentDate);
+    };
+
+    const showMode = (currentMode) => {
+      setShow(true);
+      setMode(currentMode);
+    };
+  
+    const showDatepicker = () => {
+      showMode('date');
+    };
+  
+    const showTimepicker = () => {
+      showMode('time');
+    };
+    
 
     return(
         <View style={styles.container}>
-            <TextInput
-            style={styles.input}
-            placeholder="Name"
-            autoCapitalize="none"
-            placeholderTextColor="white"
-            value={name}
-            onChangeText={name => setName(name)}
+            <Text style={styles.text}>Number of people:</Text>
+            <View margin={10}>
+              <NumericInput onChange={value => setNumOfPeople(value)} minValue={1} rounded totalWidth={350} totalHeight={55}textColor={"green"} rightButtonBackgroundColor={"green"} leftButtonBackgroundColor={"green"}/>            
+            </View>
+            <View margin={10}>
+            <Button onPress={showDatepicker} title="Set date" color="green" />
+          </View>
+          <View margin={10}>
+            <Button onPress={showTimepicker} title="Set time!" color="green"/>
+          </View>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
             />
+          )}
             <TextInput
             style={styles.input}
             placeholder="City"
@@ -46,10 +86,11 @@ const createEvent = () =>{
             value={description}
             onChangeText={description => setDescription(description)}
             />
+            <View style={{borderRadius: 14, borderColor: '#bdc3c7', overflow: 'hidden', margin: 10}}>
             <Picker
-                style={styles.input}
-                selectedValue={eventType}
-                onValueChange={(itemValue) => setEventType(itemValue)}
+                style={styles.picker}
+                selectedValue={typeOfEvent}
+                onValueChange={(itemValue) => setTypeOfEvent(itemValue)}
             >
                 <Picker.Item label="Football" value="football" />
                 <Picker.Item label="Tennis" value="tennis" />
@@ -58,13 +99,17 @@ const createEvent = () =>{
                 <Picker.Item label="Swimming" value="swimming" />
                 <Picker.Item label="Running" value="running" />
             </Picker>
-            <TouchableOpacity onPress={create}>
+            </View>
+            <TouchableOpacity onPress={eventCreateHandler}>
                 <Text style={styles.button}>Create Event</Text>
             </TouchableOpacity>
         </View>
     );
 };
 const styles = StyleSheet.create({
+    text:{
+      fontSize: 20,
+    },
     input: {
       width: 350,
       height: 55,
@@ -75,10 +120,15 @@ const styles = StyleSheet.create({
       borderRadius: 14,
       fontSize: 18,
       fontWeight: "500",
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      borderBottomLeftRadius: 10, 
-      borderBottomRightRadius: 10
+    },
+    picker: {
+      width: 350,
+      height: 55,
+      backgroundColor: "green",
+      color: "white",
+      borderRadius: 14,
+      fontSize: 18,
+      fontWeight: "500",
     },
     container: {
       flex: 1,

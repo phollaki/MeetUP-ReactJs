@@ -54,9 +54,10 @@ const Register = function () {
         value={phoneNumber}
         onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
       />
+      <View style={{borderRadius: 14, borderColor: '#bdc3c7', overflow: 'hidden', margin: 10}}>
       <Picker
         selectedValue={eventType}
-        style={styles.input}
+        style={styles.picker}
         onValueChange={(itemValue) => setEventType(itemValue)}
       >
         <Picker.Item label="Football" value="football" />
@@ -66,6 +67,7 @@ const Register = function () {
         <Picker.Item label="Swimming" value="swimming" />
         <Picker.Item label="Running" value="running" />
       </Picker>
+      </View>
       <TouchableOpacity onPress={signUp}>
         <Text style={styles.button}>Sign Up</Text>
       </TouchableOpacity>
@@ -79,6 +81,15 @@ const styles = StyleSheet.create({
     backgroundColor: "green",
     margin: 10,
     padding: 8,
+    color: "white",
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: "500",
+  },
+  picker: {
+    width: 350,
+    height: 55,
+    backgroundColor: "green",
     color: "white",
     borderRadius: 14,
     fontSize: 18,
