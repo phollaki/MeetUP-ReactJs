@@ -30,7 +30,7 @@ exports.Acceptjoin = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Join is not found with id ${id}`, 404));
   }
   const event = await Event.findById(onHold.event);
-  if (event.createdBy === owner) {
+  if (event.createdBy.toString() === owner._id.toString()) {
     const event = await Event.findByIdAndUpdate(onHold.event, {
       $pull: { request: id },
     });
@@ -56,7 +56,7 @@ exports.Declinejoin = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Join is not found with id ${id}`, 404));
   }
   const event = await Event.findById(onHold.event);
-  if (event.createdBy === owner) {
+  if (event.createdBy.toString() === owner._id.toString()) {
     const event = await Event.findByIdAndUpdate(onHold.event, {
       $pull: { request: id },
     });
