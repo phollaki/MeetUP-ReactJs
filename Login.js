@@ -10,7 +10,7 @@ const Login = () =>{
     const [password, setPassword] = useState();
     const [email, setEmail] = useState();
     const login = async ()  =>{ 
-      const res = await httpService.login(
+      await httpService.login(
           email,
           password,
         );

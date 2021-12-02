@@ -1,6 +1,7 @@
 import React from "react";
 import httpService from "./http-service.js"
 import {  View , Text, Image, Button} from "react-native";
+import useCollapse from 'react-collapsed'
 
 /*import LocationOnIcon from "@material-ui/icons/LocationOn";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -27,7 +28,7 @@ function Event({
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse({
     easing: "ease-in",
   });
-  const uid = localStorage.getItem("uid");
+  //const uid = localStorage.getItem("uid");
 
   // Join for an event
   const joinEventHandler = async (e) => {
@@ -66,23 +67,11 @@ function Event({
         <View className="event__top">
           {notFound && (
             <View className="event__notFound">
-              <View className="event__img">
-                <ImageNotSupportedIcon className="event__image" />
-              </View>
-              <View className="event__text-notFound">No event found...</View>
+              <Text>No event found...</Text>
             </View>
           )}
           {!notFound && (
             <>
-              <View className="event__img">
-                <Image
-                  src={`../../images/${type
-                    ?.toLowerCase()
-                    .replace(" ", "")}.jpg`}
-                  className="event__image"
-                  alt=""
-                />
-              </View>
               <View className="event__text">
                 <Text className="event__text-title">
                   {type[0].toUpperCase() + type.substring(1)}
