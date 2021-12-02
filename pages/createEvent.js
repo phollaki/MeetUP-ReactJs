@@ -1,5 +1,5 @@
 import React, { useState} from "react"
-import httpService from "./components/http-service.js"
+import httpService from "../components/http-service.js"
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, Button, Platform} from "react-native"
 import { Picker } from "@react-native-picker/picker"
 import NumericInput from 'react-native-numeric-input'

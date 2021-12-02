@@ -2,7 +2,7 @@ import {  StyleSheet,  Text,  Button,  TouchableOpacity,  View,  TextInput,} fro
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import axios from 'axios';
-import httpService from "./components/http-service.js"
+import httpService from "../components/http-service.js"
 
 
 const Login = () =>{

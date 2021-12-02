@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import httpService from "./components/http-service";
-import Event from "./components/Event";
+import httpService from "../components/http-service";
+import Event from "../components/Event";
 import { View } from "react-native";
 
 function CreatedEvents() {

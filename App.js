@@ -1,14 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Events from "./events";
-import Register from "./Register";
-import Login from "./Login";
-import JoinedEvents from "./joinedEvents";
-import CreateEvent from "./createEvent";
-import 'react-native-gesture-handler'
 import { NavigationContainer} from '@react-navigation/native'
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import CreatedEvents from "./createdEvents";
+import 'react-native-gesture-handler'
+
+import Events from "./pages/events";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import JoinedEvents from "./pages/joinedEvents";
+import CreateEvent from "./pages/createEvent";
+import CreatedEvents from "./pages/createdEvents";
+import Profile from "./pages/Profile";
 
 const Drawer = createDrawerNavigator()
 
@@ -22,16 +24,10 @@ export default function App() {
         <Drawer.Screen name="Created Events" component={CreatedEvents}/>
         <Drawer.Screen name="Register" component={Register}/>
         <Drawer.Screen name="Login" component={Login}/>
+        <Drawer.Screen name="Profile" component={Profile}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+

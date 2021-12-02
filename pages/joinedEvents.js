@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {  View } from "react-native";
-import httpService from "./components/http-service.js";
-import Event from "./components/Event.js"
+import httpService from "../components/http-service.js";
+import Event from "../components/Event.js"
 
 function JoinedEvents() {
   const [declinedEvents, setDeclinedEvents] = useState([]);

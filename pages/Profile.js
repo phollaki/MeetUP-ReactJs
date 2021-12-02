@@ -1,8 +1,7 @@
 import React from "react";
+import { selectUser } from "../components/store/user-slice";
+import { StyleSheet, Text, TouchableOpacity, View, Button, Link} from "react-native"
 import { useSelector } from "react-redux";
-import { selectUser } from "../store/user-slice";
-import { Avatar } from "@material-ui/core";
-import { Link } from "react-router-dom";
 
 function Profile() {
   const user = useSelector(selectUser);
@@ -13,12 +12,10 @@ function Profile() {
     );
   };
   return (
-    <div className="profile">
-      <Header />
-      <div className="profile__form">
-        <div className="profile__form-left">
-          <Avatar className="profile__avatar" />
-          <button className="profile__btn btn-upload">Upload avatar</button>
+    <View className="profile">
+      <View className="profile__form">
+        <View className="profile__form-left">
+          <Button className="profile__btn btn-upload">Upload avatar</Button>
           <Link to="/created-events" className="profile__btn btn-createdEvents">
             Created Events
           </Link>
@@ -28,10 +25,10 @@ function Profile() {
           >
             Joined Events
           </Link>
-        </div>
-        <div className="profile__form-right">
-          <div className="profile__form-field">
-            <label className="profile__form-label">Name</label>
+        </View>
+        <View className="profile__form-right">
+          <View className="profile__form-field">
+            <Text className="profile__form-label">Name</Text>
             <input
               className="profile__form-input"
               id="name"
@@ -39,9 +36,9 @@ function Profile() {
               placeholder={user.name}
               readOnly
             ></input>
-          </div>
-          <div className="profile__form-field">
-            <label className="profile__form-label">Email</label>
+          </View>
+          <View className="profile__form-field">
+            <Text className="profile__form-label">Email</Text>
             <input
               className="profile__form-input"
               id="email"
@@ -49,9 +46,9 @@ function Profile() {
               placeholder={user.email}
               readOnly
             ></input>
-          </div>
-          <div className="profile__form-field">
-            <label className="profile__form-label">Password</label>
+          </View>
+          <View className="profile__form-field">
+            <Text className="profile__form-label">Password</Text>
             <input
               type="password"
               className="profile__form-input"
@@ -60,11 +57,11 @@ function Profile() {
               placeholder="*********"
               readOnly
             ></input>
-          </div>
-          <div className="">
-            <label className="profile__form-label label-event">
+          </View>
+          <View className="">
+            <Text className="profile__form-label label-event">
               Interested Events:
-            </label>
+            </Text>
             <ul className="profile__form-events">
               {user.eventType.map((event) => (
                 <li className="profile__form-event" key={event}>
@@ -72,18 +69,20 @@ function Profile() {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="profile__form-field">
+          </View>
+          <View className="profile__form-field">
             <label className="profile__form-register" htmlFor="registeredAt">
               Registered At:
             </label>
             <span className="profile__form-date">
               {convertDate(user.registeredAt)}
             </span>
-          </div>
-          <button className="profile__btn btn-edit">Edit</button>
-        </div>
-      </div>
-    </div>
+          </View>
+          <Button className="profile__btn btn-edit">Edit</Button>
+        </View>
+      </View>
+    </View>
   );
 }
+
+export default Profile;

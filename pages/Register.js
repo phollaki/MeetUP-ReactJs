@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { Picker } from "@react-native-picker/picker"
 import axios from 'axios'
 import { StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
+
 const Register = function () {
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
@@ -10,7 +11,7 @@ const Register = function () {
   const [eventType, setEventType] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
 
-  signUp = async () => {
+  const signUp = async () => {
     try {
       const {data} = await axios.post ('/api/registration', {email, password, city, eventType, phoneNumber}) 
       console.log(data)

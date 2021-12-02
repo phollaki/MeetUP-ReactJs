@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import httpService from "./components/http-service.js";
+import httpService from "../components/http-service.js";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Events = function () {
